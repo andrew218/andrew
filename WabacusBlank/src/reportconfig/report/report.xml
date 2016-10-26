@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<applications xmlns="http://www.wabacus.com"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:schemaLocation="http://www.wabacus.com ../xsd/wabacus.applications.xsd">
+	<page id="editAcceptMortgage" js="/webresources/script/validate.js" css="/webresources/component/tiny_mce/themes/advanced/skins/o2k7/ui.css">
+		 <tabpanel id="tp1" margin="10px" titlestyle="2">
+		 <report id="report1" title="抵押单列表" type="editablelist2" scrollheight="" scrollwidth="1900px" width="2500px" dataexport="richexcel"  pagesize="10|20|30|40|50|-1" navigate="${navigatepagesizepage1.report3.navigate}">
+			<display valuetdwidth="100px" labeltdwidth="71px" labelbgcolor="#f0f0f0" labelalign="right" valuealign="left">
+					    	<col column="pid" displaytype="hidden"></col>
+							<col column="orderNumber" label="订单编号" valuestyleproperty="style='mso-number-format:\@'">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty})"></inputbox>
+						   </col>
+						   <col column="order_type" label="订单类型">
+						   		<inputbox type="selectbox" jsvalidate="isNotEmpty(${invalid.isnotempty})" >
+								     <option value="10" label="抵押单"></option> 
+								     <option value="20" label="信用单"></option> 
+							    </inputbox>
+						   </col>
+						   <col column="order_status" label="订单状态">
+					   		<inputbox type="selectbox" jsvalidate="isNotEmpty(${invalid.isnotempty})">
+							     <option value="10" label="等待受理"></option>
+							     <option value="20" label="受理面签"></option>
+							     <option value="30" label="待审批"></option> 
+							     <option value="40" label="已出批复"></option>
+							     <option value="50" label="放款收佣"></option> 
+							     <option value="60" label="收款结案"></option>
+							     <option value="70" label="失败退费"></option>
+							     <option value="80" label="失败定转佣"></option> 
+							     <option value="90" label="办理赎楼"></option>
+							     <option value="100" label="办理抵押"></option>
+						    </inputbox>
+					   	   </col>
+					       <col column="customer_name" label="客户姓名" br="true">
+					   			<inputbox jsvalidate="isNotEmpty(${invalid.isnotempty})"></inputbox>
+					   	   </col>
+					   	   <col column="fee_rate" label="费率（%）" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isRate(#data#不是合法数字)"  jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="SIGN_TIME" label="面签时间" datatype="date{yyyy-MM-dd}">
+						   		<inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   <col column="NOTARY_TIME" label="公证时间" datatype="date{yyyy-MM-dd}">
+						   	  <inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   
+						   <col column="RECE_ACCOUNT" label="第三方收款账户" datatype="float" br="true">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty})"></inputbox>
+						   </col>
+						   <col column="APPROVED_AMOUNT" label="批复金额" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="APPROVED_TIME" label="批复时间" datatype="date{yyyy-MM-dd}">
+							    <inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   <col column="FORECLOSURE_COM" label="赎楼公司">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty})"></inputbox>
+						   </col>
+						   <col column="OLD_BANK_NAME" label="原按揭支行" br="true">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty})"></inputbox>
+						   </col>
+						   <col column="MORTGAGE_TIME" label="抵押时间" datatype="date{yyyy-MM-dd}">
+							    <inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   <col column="LOAN_TIME" label="放款时间" datatype="date{yyyy-MM-dd}">
+							    <inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   <col column="APPROVED_COMM" label="批款佣金" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="ASTIMATE_MONEY" label="评估费" datatype="float" br="true" ongetvalue="getastimate_money">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="FORE_MONEY" label="赎楼费" datatype="float" ongetvalue="getFORE_MONEY">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="NOTARY_MONEY" label="公正费" datatype="float" ongetvalue="getNOTARY_MONEY">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="ENTRYEAY_MONEY" label="通道费" datatype="float" ongetvalue="getENTRYEAY_MONEY">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="MATERIAL_MONEY" label="物料费" datatype="float" br="true" ongetvalue="getMATERIAL_MONEY">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="BRUSH_CARD_MONEY" label="刷卡费" datatype="float" ongetvalue="getBRUSH_CARD_MONEY">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="PLEDGE_MONEY" label="质押费" datatype="float" ongetvalue="getPLEDGE_MONEY">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="OTHER_MONEY" label="其他费用" datatype="float" ongetvalue="getOTHER_MONEY">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="fee_count" label="合计费用" datatype="float" br="true">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="RECE_DEPOSIT" label="已收定金" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="GENERAL_ENDING" label="待收尾款" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="RECE_ENDING" label="已收尾款" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="OTHER_RECE" label="其他营收" datatype="float" br="true">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="ACTUAL_RECE" label="实收到账" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="JUNCTION_TIME" label="结佣时间" datatype="date{yyyy-MM-dd}">
+							    <inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   
+					    </display>
+					    <sql>
+					    	<select>
+						      <value>
+							<![CDATA[select a.orderNumber,a.ORDER_TYPE,a.ORDER_STATUS,a.CUSTOMER_NAME,a.FEE_RATE,b.* from t_order_info a,t_accept_mortgage b where a.PID = b.PID and a.order_type = 10 and {#condition#}]]>
+						</value>
+						      <condition name="txtpid" hidden="true">
+							       <value>
+								<![CDATA[A.pid = '#data#' ]]>
+							</value>
+						      </condition>
+					       </select>
+					       <update>
+					       		update t_order_info(@{order_status}) where pid=@{pid};
+					       		update t_accept_mortgage(@{SIGN_TIME},@{NOTARY_TIME},@{RECE_ACCOUNT},@{APPROVED_AMOUNT},@{APPROVED_TIME},@{FORECLOSURE_COM},@{OLD_BANK_NAME}
+									,@{MORTGAGE_TIME},@{LOAN_TIME},@{APPROVED_COMM},@{ASTIMATE_MONEY},@{FORE_MONEY},@{NOTARY_MONEY},@{ENTRYEAY_MONEY},@{MATERIAL_MONEY},
+									@{BRUSH_CARD_MONEY},@{PLEDGE_MONEY},@{OTHER_MONEY},@{GENERAL_ENDING},@{RECE_ENDING},@{OTHER_RECE},@{ACTUAL_RECE},@{JUNCTION_TIME},@{fee_count}) where pid=@{pid};
+					       </update>
+					    </sql>
+					    <format>
+							  <value>
+									order_type=order_type==null?"10":order_type.trim();
+									if(order_type.equals("10")) order_type="抵押单";
+									else order_type="信用单";
+									
+									order_status=order_status==null?"10":order_status.trim();
+									if(order_status.equals("10")) order_status="等待受理";
+									else if(order_status.equals("20")) order_status="受理面签";
+									else if(order_status.equals("30")) order_status="待审批";
+									else if(order_status.equals("40")) order_status="已出批复";
+									else if(order_status.equals("90")) order_status="办理赎楼";
+									else if(order_status.equals("100")) order_status="办理抵押";
+									else if(order_status.equals("50")) order_status="放款收佣";
+									else if(order_status.equals("60")) order_status="收款结案";
+									else if(order_status.equals("70")) order_status="失败退费";
+									else if(order_status.equals("80")) order_status="失败定转佣";
+							  </value>
+					</format>
+		 </report>
+		 <report id="report2" title="信用单列表" type="editablelist2" scrollheight="" scrollwidth="1900px" width="2200px" pagesize="10|20|30|40|50|-1" dataexport="richexcel"  navigate="${navigatepagesizepage1.report3.navigate}">
+					    <display valuetdwidth="100px" labeltdwidth="71px" labelbgcolor="#f0f0f0" labelalign="right" valuealign="left">
+					    	<col column="pid" displaytype="hidden"></col>
+							<col column="orderNumber" label="订单编号" valuestyleproperty="style='mso-number-format:\@'">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty})"></inputbox>
+						   </col>
+						   <col column="order_type" label="订单类型">
+						   		<inputbox type="selectbox" jsvalidate="isNotEmpty(${invalid.isnotempty})" >
+								     <option value="10" label="抵押单"></option> 
+								     <option value="20" label="信用单"></option> 
+							    </inputbox>
+						   </col>
+						   <col column="order_status" label="订单状态">
+					   		<inputbox type="selectbox" jsvalidate="isNotEmpty(${invalid.isnotempty})">
+							     <option value="10" label="等待受理"></option>
+							     <option value="20" label="受理面签"></option>
+							     <option value="30" label="待审批"></option> 
+							     <option value="40" label="已出批复"></option>
+							     <option value="50" label="放款收佣"></option> 
+							     <option value="60" label="收款结案"></option>
+							     <option value="70" label="失败退费"></option>
+							     <option value="80" label="失败定转佣"></option> 
+							     <option value="90" label="办理赎楼"></option>
+							     <option value="100" label="办理抵押"></option>
+						    </inputbox>
+					   	   </col>
+					       <col column="customer_name" label="客户姓名" br="true">
+					   			<inputbox jsvalidate="isNotEmpty(${invalid.isnotempty})"></inputbox>
+					   	   </col>
+					   	   <col column="fee_rate" label="费率（%）" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isRate(#data#不是合法数字)"  jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="SIGN_TIME" label="面签时间" datatype="date{yyyy-MM-dd}">
+						   		<inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   <col column="APPROVED_AMOUNT" label="批复金额" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="APPROVED_TIME" label="批复时间" datatype="date{yyyy-MM-dd}" br="true">
+							    <inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   <col column="LOAN_TIME" label="放款时间" datatype="date{yyyy-MM-dd}">
+							    <inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   <col column="APPROVED_COMM" label="批款佣金" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="ENTRYEAY_MONEY" label="通道费" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="OTHER_MONEY" label="其他费用" datatype="float" br="true">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)" jsvalidatetype="onblur"></inputbox>
+						   </col>
+						   <col column="fee_count" label="合计费用" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="RECE_DEPOSIT" label="已收定金" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="GENERAL_ENDING" label="待收尾款" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="RECE_ENDING" label="已收尾款" datatype="float" br="true">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="OTHER_RECE" label="其他营收" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="ACTUAL_RECE" label="实收到账" datatype="float">
+							    <inputbox jsvalidate="isNotEmpty(${invalid.isnotempty});isMoney(#data#不是合法金额)"></inputbox>
+						   </col>
+						   <col column="JUNCTION_TIME" label="结佣时间" datatype="date{yyyy-MM-dd}">
+							    <inputbox type="datepicker" jsvalidate="isNotEmpty(${invalid.isnotempty});isDate(#data#格式不对，必须为yyyy-MM-dd格式)" ></inputbox>
+						   </col>
+						   
+					    </display>
+					    <sql>
+					    	<select>
+						      <value>
+							<![CDATA[select a.orderNumber,a.ORDER_TYPE,a.ORDER_STATUS,a.CUSTOMER_NAME,a.FEE_RATE,SIGN_TIME,APPROVED_AMOUNT,APPROVED_TIME,LOAN_TIME,APPROVED_COMM,ENTRYEAY_MONEY,OTHER_MONEY,GENERAL_ENDING,RECE_ENDING,OTHER_RECE,ACTUAL_RECE,JUNCTION_TIME,RECE_DEPOSIT,b.pid,fee_count from t_order_info a,t_accept_mortgage b where a.PID = b.PID and a.order_type = 20 and {#condition#}]]>
+						</value>
+						      <condition name="txtpid" hidden="true">
+							       <value>
+								<![CDATA[A.pid = '#data#' ]]>
+							</value>
+						      </condition>
+					       </select>
+					       <update>
+					       		update t_order_info(@{order_status}) where pid=@{pid};
+					       		update t_accept_mortgage(@{SIGN_TIME},@{APPROVED_AMOUNT},@{APPROVED_TIME},@{LOAN_TIME},@{APPROVED_COMM},@{ENTRYEAY_MONEY},@{OTHER_MONEY},@{GENERAL_ENDING},@{RECE_ENDING},@{OTHER_RECE},@{ACTUAL_RECE},@{JUNCTION_TIME},@{fee_count}) where pid=@{pid};
+					       </update>
+					    </sql>
+					    <format>
+							  <value>
+									order_type=order_type==null?"10":order_type.trim();
+									if(order_type.equals("10")) order_type="抵押单";
+									else order_type="信用单";
+									
+									order_status=order_status==null?"10":order_status.trim();
+									if(order_status.equals("10")) order_status="等待受理";
+									else if(order_status.equals("20")) order_status="受理面签";
+									else if(order_status.equals("30")) order_status="待审批";
+									else if(order_status.equals("40")) order_status="已出批复";
+									else if(order_status.equals("50")) order_status="放款收佣";
+									else if(order_status.equals("60")) order_status="收款结案";
+									else if(order_status.equals("70")) order_status="失败退费";
+									else if(order_status.equals("80")) order_status="失败定转佣";
+									
+							  </value>
+							</format>
+				</report>
+		</tabpanel>
+	</page>
+</applications>

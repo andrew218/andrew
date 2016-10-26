@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns="http://www.wabacus.com"
+			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			  xsi:schemaLocation="http://www.wabacus.com ../xsd/wabacus.resources.xsd">
+    <resource key="refformatpage1.report1.format1" type="com.wabacus.config.resource.XmlElementRes">
+    		<format>
+			  <value>
+					order_type=order_type==null?"10":order_type.trim();
+					if(order_type.equals("10")) order_type="抵押单";
+					else order_type="信用单";
+					is_take_off=is_take_off==null?"1":is_take_off.trim();
+					if(is_take_off.equals("1")) is_take_off="有";
+					else is_take_off="无";
+					order_status=order_status==null?"10":order_status.trim();
+					if(order_status.equals("10")) order_status="等待受理";
+					else if(order_status.equals("20")) order_status="受理面签";
+					else if(order_status.equals("30")) order_status="待审批";
+					else if(order_status.equals("40")) order_status="已出批复";
+					else if(order_status.equals("90")) order_status="办理赎楼";
+					else if(order_status.equals("100")) order_status="办理抵押";
+					else if(order_status.equals("50")) order_status="放款收佣";
+					else if(order_status.equals("60")) order_status="收款结案";
+					else if(order_status.equals("70")) order_status="失败退费";
+					else if(order_status.equals("80")) order_status="失败定转佣";
+					
+					source=source==null?"10":source.trim();
+					if(source.equals("10")) source="内部经纪人";
+					else if(source.equals("20")) source="外部经纪人";
+					else if(source.equals("30")) source="员工推荐";
+					else if(source.equals("40")) source="电台广告";
+					else if(source.equals("50")) source="电销";
+					else if(source.equals("60")) source="业主";
+					else if(source.equals("70")) source="同行";
+			  </value>
+			</format>
+    </resource>
+</resources>
